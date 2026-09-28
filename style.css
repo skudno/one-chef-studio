@@ -42,3 +42,39 @@
   .collage-tile span,.link-arrow,.intro-foot b,.big-phone span{display:none}
   .underlink,.socials a,footer>a:last-child{text-decoration:underline;text-underline-offset:4px}
 }
+
+/* Horizontal photo ribbon and in-page photo viewer */
+.gallery-main{min-width:0}
+.menu-photo,.collage-tile{border:0;padding:0;cursor:zoom-in;font:inherit}
+.menu-photo{display:block;width:64px;height:64px;background:transparent;border-radius:3px;overflow:hidden}
+.menu-photo:hover .menu-thumb,.menu-photo:focus-visible .menu-thumb{transform:scale(1.08)}
+.menu-thumb{transition:transform .25s ease}
+.collage{display:block;overflow:hidden;mask-image:linear-gradient(to right,transparent,#000 3%,#000 97%,transparent)}
+.collage-track{display:flex;width:max-content;animation:gallery-drift 90s linear infinite}
+.collage-group{display:flex;flex:none;gap:12px;padding-right:12px}
+.collage-tile,.collage-tile:first-child,.collage-tile:nth-child(6){display:block;flex:none;width:clamp(190px,22vw,285px);height:230px;grid-column:auto;grid-row:auto}
+.collage-tile img{width:100%;height:100%;object-fit:cover}
+.collage:hover .collage-track,.collage:focus-within .collage-track,.photo-open .collage-track{animation-play-state:paused}
+@keyframes gallery-drift{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.photo-dialog{position:fixed;inset:0;width:min(1120px,calc(100vw - 32px));height:min(92dvh,900px);max-width:none;max-height:none;margin:auto;padding:48px 20px 20px;border:0;border-radius:6px;background:var(--paper);color:var(--ink);box-shadow:0 20px 80px #0005}
+.photo-dialog::backdrop{background:#111d;backdrop-filter:blur(5px)}
+.photo-dialog[open]{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px}
+.photo-full{display:block;max-width:100%;max-height:calc(92dvh - 105px);object-fit:contain}
+.photo-caption{margin:0;font-size:13px;text-align:center}
+.photo-close{position:absolute;top:5px;right:13px;border:0;background:transparent;color:var(--ink);font-size:36px;line-height:1;cursor:pointer;padding:2px 8px}
+.photo-close:hover{color:var(--red)}
+.menu-photo:focus-visible,.collage-tile:focus-visible,.photo-close:focus-visible{outline:3px solid var(--red);outline-offset:3px}
+@media(max-width:520px){.menu-photo{width:54px;height:54px}.collage-tile,.collage-tile:first-child,.collage-tile:nth-child(6){width:190px;height:160px}.collage-group{gap:8px;padding-right:8px}.photo-dialog{width:calc(100vw - 16px);height:min(90dvh,800px);padding:44px 10px 15px}.photo-full{max-height:calc(90dvh - 100px)}}
+@media(prefers-reduced-motion:reduce){.collage{overflow-x:auto;mask-image:none}.collage-track{animation:none}.menu-thumb{transition:none}}
+
+/* Three-photo viewer for the collage */
+.photo-stage{display:flex;align-items:center;justify-content:center;width:100%;min-height:0;flex:1;gap:8px}
+.photo-dialog.is-gallery .photo-full{flex:0 1 62%;min-width:0;max-width:62%;max-height:calc(92dvh - 95px)}
+.photo-side{position:relative;display:flex;align-items:center;justify-content:center;flex:1 1 19%;min-width:0;height:min(62vh,520px);padding:0;border:0;background:none;cursor:pointer}
+.photo-side img{display:block;width:100%;height:100%;object-fit:cover;filter:brightness(.52);transform:scale(.83);border-radius:4px;transition:filter .25s ease,transform .25s ease}
+.photo-side:hover img,.photo-side:focus-visible img{filter:brightness(.76);transform:scale(.89)}
+.photo-side span{position:absolute;z-index:1;top:50%;transform:translateY(-50%);display:grid;place-items:center;width:42px;height:42px;border-radius:50%;background:var(--paper);color:var(--ink);box-shadow:0 2px 14px #0003;font-size:34px;line-height:1}
+.photo-prev span{left:3px}.photo-next span{right:3px}
+.photo-dialog:not(.is-gallery) .photo-side{display:none}
+.photo-side:focus-visible{outline:3px solid var(--red);outline-offset:2px}
+@media(max-width:520px){.photo-stage{gap:3px}.photo-dialog.is-gallery .photo-full{flex-basis:68%;max-width:68%;max-height:calc(90dvh - 90px)}.photo-side{flex-basis:16%;height:min(45vh,420px)}.photo-side img{transform:scale(.88)}.photo-side span{width:29px;height:29px;font-size:24px}.photo-prev span{left:0}.photo-next span{right:0}}
