@@ -13,6 +13,11 @@ if(window.scrollY>56)dismissIntro();
 const reducedMotion=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 if(!reducedMotion && 'IntersectionObserver' in window){const blocks=document.querySelectorAll('.about-main,.menu-main,.gallery-main,.contacts-main');blocks.forEach(block=>block.classList.add('will-reveal'));const observer=new IntersectionObserver(entries=>{entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('revealed');observer.unobserve(entry.target);}})},{threshold:.08});blocks.forEach(block=>observer.observe(block));}
 
+const backToTop=document.querySelector('.back-to-top');
+function updateBackToTop(){backToTop.classList.toggle('is-visible',window.scrollY>450)}
+window.addEventListener('scroll',updateBackToTop,{passive:true});
+updateBackToTop();
+
 const photoDialog=document.querySelector('.photo-dialog');
 const fullPhoto=photoDialog.querySelector('.photo-full');
 const photoCaption=photoDialog.querySelector('.photo-caption');
